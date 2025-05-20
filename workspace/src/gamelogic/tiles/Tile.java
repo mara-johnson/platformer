@@ -36,6 +36,7 @@ public class Tile{
 	
 	
 	//------------------------------------Getters
+	
 	public boolean isSolid() {
 		return solid;
 	}
@@ -62,5 +63,9 @@ public class Tile{
 	
 	public int getSize() {
 		return size;
+	}
+
+	public void setImage(BufferedImage img){
+		image = img;
 	}
 }

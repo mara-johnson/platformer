@@ -46,6 +46,7 @@ public class Main extends GameBase implements PlayerDieListener, PlayerWinListen
 
 		levels = new LevelData[2];
 		try {
+			//change levels[0] to gasTest1.txt
 			levels[0] = LeveldataLoader.loadLeveldata("/workspaces/platformer/workspace/maps/testMap.txt");
 			levels[1] = LeveldataLoader.loadLeveldata("/workspaces/platformer/workspace/maps/map1.txt");
 		} catch (Exception e) {
