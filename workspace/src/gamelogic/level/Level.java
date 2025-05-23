@@ -171,7 +171,7 @@ public class Level {
 						water(flowers.get(i).getCol(), flowers.get(i).getRow(), map, 3);
 					else
 					//change 9 to 20
-						addGas(flowers.get(i).getCol(), flowers.get(i).getRow(), map, 9, new ArrayList<Gas>());
+						addGas(flowers.get(i).getCol(), flowers.get(i).getRow(), map, 20, new ArrayList<Gas>());
 					flowers.remove(i);
 					i--;
 				}
@@ -255,12 +255,78 @@ public class Level {
 		map.addTile(col, row, g);
 		placedThisRound.add(g);
 		numSquaresToFill--;
-
+		
+		
 		while(placedThisRound.size() > 0 && numSquaresToFill > 0){
 			//make desired pattern centered at placedThisRound.get(0)
 			//every tile has getters
 			//remove tiles once processed from placedThisRound
 			//be sure to add every tile you make to placedThisRound, order determines shape
+			//if we can go up
+			//if(row + 1 < map.getTiles()[0].length && !(map.getTiles()[col][row + 1] instanceof Water) && !map.getTiles()[col][row + 1].isSolid()){
+			//r-1. r. r+1
+			//c, c+1, c-1
+			Gas current = placedThisRound.remove(0);
+			int currRow = current.getRow();
+			int currCol = current.getCol();
+			System.out.println("row" + currRow);
+			System.out.println("col" + currCol);
+			//up
+			if(currRow - 1 < map.getTiles().length && !map.getTiles()[currCol][currRow - 1].isSolid() && !(map.getTiles()[currCol][currRow - 1] instanceof Gas) && numSquaresToFill>0){
+				Gas uG = new Gas (currCol, currRow - 1, tileSize, tileset.getImage("GasOne"), this, 0);
+				map.addTile(currCol, currRow - 1, uG);
+				placedThisRound.add(uG);
+				numSquaresToFill--;
+			}
+			//up right
+			if(currCol + 1 < map.getTiles().length && !map.getTiles()[currCol + 1][currRow - 1].isSolid() && !(map.getTiles()[currCol + 1][currRow - 1] instanceof Gas) && numSquaresToFill>0){
+				Gas rUG = new Gas (currCol + 1, currRow - 1, tileSize, tileset.getImage("GasOne"), this, 0);
+				map.addTile(currCol + 1, currRow - 1, rUG);
+				placedThisRound.add(rUG);
+				numSquaresToFill--;
+			}
+			//up left
+			if(currCol - 1 < map.getTiles().length && !map.getTiles()[currCol - 1][currRow - 1].isSolid() && !(map.getTiles()[currCol - 1][currRow - 1] instanceof Gas) && numSquaresToFill>0){
+				Gas lUG = new Gas (currCol - 1, currRow - 1, tileSize, tileset.getImage("GasOne"), this, 0);
+				map.addTile(currCol - 1, currRow - 1, lUG);
+				placedThisRound.add(lUG);
+				numSquaresToFill--;
+			}
+		 //right
+			 if(currCol + 1 < map.getTiles().length && !map.getTiles()[currCol + 1][currRow].isSolid() && !(map.getTiles()[currCol + 1][currRow] instanceof Gas) && numSquaresToFill>0){
+			 	Gas rG = new Gas (currCol + 1, currRow, tileSize, tileset.getImage("GasOne"), this, 0);
+			 	map.addTile(currCol + 1, currRow, rG);
+			 	placedThisRound.add(rG);
+			 	numSquaresToFill--;
+			 }
+			//left
+			 if(currCol - 1 < map.getTiles().length && !map.getTiles()[currCol - 1][currRow].isSolid() && !(map.getTiles()[currCol - 1][currRow] instanceof Gas) && numSquaresToFill>0){
+			 	Gas lG = new Gas (currCol - 1, currRow, tileSize, tileset.getImage("GasOne"), this, 0);
+			 	map.addTile(currCol - 1, currRow, lG);
+			 	placedThisRound.add(lG);
+			 	numSquaresToFill--;
+			 }
+			 //down
+			 if(currRow + 1 < map.getTiles().length && !map.getTiles()[currCol][currRow + 1].isSolid() && !(map.getTiles()[currCol][currRow + 1] instanceof Gas) && numSquaresToFill>0){
+			 	Gas dG = new Gas (currCol, currRow + 1, tileSize, tileset.getImage("GasOne"), this, 0);
+			 	map.addTile(currCol, currRow + 1, dG);
+			 	placedThisRound.add(dG);
+			 	numSquaresToFill--;
+			 }
+			 //down right 
+			 if(currRow + 1 < map.getTiles().length && !map.getTiles()[currCol + 1][currRow + 1].isSolid() && !(map.getTiles()[currCol + 1][currRow + 1] instanceof Gas) && numSquaresToFill>0){
+			 	Gas dRG = new Gas (currCol + 1, currRow + 1, tileSize, tileset.getImage("GasOne"), this, 0);
+			 	map.addTile(currCol + 1, currRow + 1, dRG);
+			 	placedThisRound.add(dRG);
+			 	numSquaresToFill--;
+			 }
+			 //down left
+			 if(currRow + 1 < map.getTiles().length && !map.getTiles()[currCol - 1][currRow + 1].isSolid() && !(map.getTiles()[currCol - 1][currRow + 1] instanceof Gas) && numSquaresToFill>0){
+			 	Gas dLG = new Gas (currCol - 1, currRow + 1, tileSize, tileset.getImage("GasOne"), this, 0);
+			 	map.addTile(currCol - 1, currRow + 1, dLG);
+			 	placedThisRound.add(dLG);
+			 	numSquaresToFill--;
+			 }
 
 		}
 		//anytime you make a tile you want to expand into pattern(up, up right, up left)
